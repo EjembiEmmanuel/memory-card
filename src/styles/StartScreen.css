@@ -1,0 +1,49 @@
+@font-face {
+    font-family: "Young Serif";
+    src: url("../assets/Young_Serif/YoungSerif-Regular.ttf");
+}
+
+@keyframes startScreenAnimation {
+    from {
+        transform: scale(0);
+    } to {
+        transform: scale(1);
+    }
+}
+
+.startScreen {
+    margin-top: 3em;
+    transform-origin: center;
+    animation: startScreenAnimation 0.3s ease;
+}
+
+.startScreen .logoContainer {
+    margin-bottom: 3em;
+}
+
+.startScreen .logoContainer .logo {
+    width: 25em;
+    height: 25em;
+}
+
+.startScreen .levelBtnsContainer .levelBtn {
+    margin: 0.5em;
+    background-color: #fdf8bc;
+    color: #f93c3d;
+    font-family: "Young Serif";
+    font-size: 1.2em;
+    box-shadow: 0 2px 5px black, 0 -2px 5px black;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 0.6em 1.2em;
+    cursor: pointer;
+    transition: transform 0.25s;
+}
+
+.startScreen .levelBtnsContainer .levelBtn:hover {
+    transform: scale(1.1);
+}
+
+.startScreen .levelBtnsContainer .levelBtn:focus {
+    outline: none;
+}
