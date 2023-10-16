@@ -1,3 +1,11 @@
+@keyframes footerAnimation {
+    0% {
+        transform: translateY(100%);
+    } 100% {
+        transform: translateY(0%);
+    }
+}
+
 .footer {
     width: 100%;
     display: flex;
@@ -5,6 +13,7 @@
     justify-content: space-between;
     position: fixed;
     bottom: 0;
+    animation: footerAnimation 0.5s ease;
 }
 
 .footerBtn {
