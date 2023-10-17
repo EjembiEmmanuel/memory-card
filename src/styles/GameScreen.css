@@ -1,0 +1,15 @@
+@keyframes gameScreenAnimation {
+    from {
+        transform: scale(0);
+    } to {
+        transform: scale(1);
+    }
+}
+
+.gameScreen {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: gameScreenAnimation 0.5s ease-in-out;
+}

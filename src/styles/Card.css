@@ -1,0 +1,49 @@
+.tilt {
+    margin: 0.5em;
+}
+
+.card {
+    height: 20em;
+    width: 14em;
+    perspective: 1000px;
+    cursor: pointer;
+}
+
+.cardInner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.card.flipped .cardInner {
+    transform: rotateY(180deg);
+}
+
+.cardFront {
+    width: 100%;
+    height: 100%;
+    background-image: url("../assets/card-image.jpeg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+    border-radius: 18px;
+}
+
+.cardFront, .cardBack {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.cardBack {
+    background-image: url("../assets/card-image.jpeg");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    background-position: center;
+
+    transform: rotateY(180deg);
+    border-radius: 18px;
+}

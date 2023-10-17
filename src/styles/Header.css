@@ -1,0 +1,51 @@
+@font-face {
+    font-family: "Young Serif";
+    src: url("../assets/Young_Serif/YoungSerif-Regular.ttf");
+}
+
+@keyframes headerAnimation {
+    0% {
+        opacity: 0;
+    } 100% {
+        opacity: 1;
+    }
+}
+
+.header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    animation: headerAnimation 1s ease;
+}
+
+.headerLogoContainer {
+    margin: 1em;
+}
+
+.headerLogoContainer .logo {
+    width: 5em;
+    cursor: pointer;
+}
+
+.scoreContainer {
+    background-color: #17233e;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-family: "Young Serif";
+    font-size: 1.2em;
+    font-weight: bold;
+    width: 10em;
+    padding: 0.1em 0.7em;
+    margin: 1em;
+    box-shadow: 0 0 15px rgba(169, 161, 161, 0.5), 0 0 15px rgba(169, 161, 161, 0.5);
+    border-radius: 20px;
+}
+
+.scoreContainer p {
+    margin: 0.2em;
+}
