@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import Sound  from 'react-sound'
+import ReactHowler from 'react-howler'
 import './App.css'
 import StartScreen from './screens/StartScreen'
 import Footer from './components/Footer'
@@ -144,11 +144,12 @@ function App() {
 
   return (
     <div className="app">
-      <Sound 
-        url={MortalKombatThemeSong}
-        playStatus={isMusicPlaying ? 'PLAYING' : 'PAUSED'}
-        volume={30}
-        loop={true} />
+      <ReactHowler 
+        src={MortalKombatThemeSong}
+        playing={isMusicPlaying}
+        volume={0.3}
+        loop={true}
+      />
 
       {loading ? (
         <p className="loader">Loading...</p>
