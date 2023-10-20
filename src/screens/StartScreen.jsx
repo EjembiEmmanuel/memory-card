@@ -24,9 +24,9 @@ export default function StartScreen({
                 <img className="logo" src={MortalKombatLogo} alt="Mortal Kombat Logo" />
             </div>
             <div className="levelBtnsContainer">
-                <button onClick={() => {startGame(); playClickSound(); handleGameLevel("Easy")}} className="levelBtn">Easy</button>
-                <button onClick={() => {startGame(); playClickSound(); handleGameLevel("Medium")}} className="levelBtn">Medium</button>
-                <button onClick={() => {startGame(); playClickSound(); handleGameLevel("Hard")}} className="levelBtn">Hard</button>
+                <button onClick={() => {startGame(); playClickSound(); handleGameLevel([5, 3])}} className="levelBtn">Easy</button>
+                <button onClick={() => {startGame(); playClickSound(); handleGameLevel([7, 4])}} className="levelBtn">Medium</button>
+                <button onClick={() => {startGame(); playClickSound(); handleGameLevel([10, 5])}} className="levelBtn">Hard</button>
             </div>
         </div>
     )

@@ -6,14 +6,14 @@ export default function Header({
     props : {
         score,
         bestScore,
-        restartGame,
-        playClickSound
+        playClickSound,
+        reset
     }   }) {
 
     return (
         <div className="header">
             <div className="headerLogoContainer">
-                <img onClick={() => {restartGame(); playClickSound()}} className="logo" src={MortalKombatLogo} alt="Mortal Kombat Logo" />
+                <img onClick={() => {reset(); playClickSound()}} className="logo" src={MortalKombatLogo} alt="Mortal Kombat Logo" />
             </div>
             <div className="scoreContainer">
                 <p className="score">Score: {score}</p>

@@ -2,10 +2,11 @@ import PropTypes from 'prop-types'
 import "../styles/Card.css"
 import Tilt from "react-parallax-tilt"
 
-export default function Card({ props: {
+export default function Card({
     isFlipped,
-    handleFlip,
-} }) {
+    handleCardClick,
+    character
+  }) {
 
     return (
         <Tilt
@@ -15,17 +16,22 @@ export default function Card({ props: {
             glareBorderRadius="18px"
             glareMaxOpacity={0.8}
             glarePosition="bottom"
-        >
-            <div onClick={handleFlip} className={`card ${isFlipped ? 'flipped' : ''}`}>
-                <div className="cardInner">
-                    <div className="cardFront"></div>
-                    <div className="cardBack"></div>
+            >
+                <div onClick={() => handleCardClick(character)} className={`card ${isFlipped ? 'flipped' : ''}`}>
+                    <div className="cardInner">
+                        <div className="cardFront">
+                            <img src={character.src} alt="Mortal Kombat character" />
+                            <p>{character.name}</p>
+                        </div>
+                        <div className="cardBack"></div>
+                    </div>
                 </div>
-            </div>
         </Tilt>
     )
 }
 
 Card.propTypes = {
-    props: PropTypes.object.isRequired
+    isFlipped: PropTypes.bool.isRequired,
+    handleCardClick: PropTypes.func.isRequired,
+    character: PropTypes.object.isRequired,
 }

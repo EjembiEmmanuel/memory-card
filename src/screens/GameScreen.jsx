@@ -1,16 +1,27 @@
 import PropTypes from 'prop-types'
 import "../styles/GameScreen.css"
-import { useState } from 'react';
+import { useState, useEffect } from 'react' ;
 import Card from "../components/Card";
+import GameOver from '../components/GameOver';
 import FlipSound from "../assets/flip.mp3"
 
 export default function GameScreen({
     props: {
-        gameLevel,
-        isSoundPlaying
+        isSoundPlaying,
+        characters,
+        setCharacters,
+        visibleCharacters,
+        getCharacters,
+        getVisibleCharacters,
+        evaluateGameStatus,
+        score,
+        setScore,
+        updateScore
     }
 }) {
+    const [isClicked, setIsClicked] = useState(false)
     const [isFlipped, setIsFlipped] = useState(false)
+    const [gameStatus, setGameStatus] = useState("running")
 
     const playFlipSound = () => {
         if (isSoundPlaying) {
@@ -20,44 +31,88 @@ export default function GameScreen({
         }
     }
 
-    const handleFlip = () => {
-        setIsFlipped(!isFlipped)
+    const handleCardClick = (character) => {
+        setIsClicked(true)
+
+        if (isClicked) return
+
+        let status = evaluateGameStatus(character);
+        setGameStatus(status);
+        character.clicked = true;
+
+        if (status !== "running") {
+            if (status === "win") updateScore();
+            setIsClicked(false)
+            return
+        }
+
+        updateScore()
+
+        setIsFlipped(true)
         playFlipSound()
+
+        setTimeout(() => {
+            getVisibleCharacters(characters)
+        }, 800);
         
         setTimeout(() => {
             setIsFlipped(false)
             playFlipSound()
         }, 1000);
+
+        setTimeout(() => {
+            setIsClicked(false)
+            status = "running"
+        }, 1500);
     }
 
-    const cardProps = {
-        isFlipped,
-        handleFlip
-    }
+    const restartGame = () => {
+        setScore(0)
+        setGameStatus("running")
 
-    let cards = []
+        characters.forEach(character => {
+            character.clicked = false;
+        })
 
-    let numberOfCards
+        getCharacters();
+    };
 
-    if (gameLevel === "Easy") {
-        numberOfCards = 3
-    } else if (gameLevel === "Medium") {
-        numberOfCards = 4
-    } else if (gameLevel === "Hard") {
-        numberOfCards = 5
-    }
+    useEffect(() => {
+        getCharacters();
 
-    for (let i = 0; i < numberOfCards; i++) {
-        cards.push(<Card props={cardProps} />)
+        return () => {
+            setCharacters([]);
+
+            characters.forEach(character => {
+                character.clicked = false;
+            });
+        }
+    }, []);
+
+    const gameOverProps = {
+        gameStatus,
+        restartGame
     }
 
     return (
         <div className="gameScreen">
-            {cards.map((card) => (
+            {gameStatus === "running" && (
                 <>
-                    {card}
+                    <div className="cards">
+                        {visibleCharacters.map((visibleCharacter) => (
+                            <Card
+                                key={visibleCharacter.id}
+                                isFlipped = { isFlipped }
+                                handleCardClick = { handleCardClick }
+                                character = { visibleCharacter }
+                            />
+                        ))}
+                    </div>
+                    <div className="progressIndicator">{score} / {characters.length}</div>
                 </>
-            ))}
+            )}
+            {gameStatus === "lose" && <GameOver props = { gameOverProps } />}
+            {gameStatus === "win" && <GameOver props = { gameOverProps } />}
         </div>
     )
 }

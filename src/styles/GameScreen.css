@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Young Serif";
+    src: url("../assets/Young_Serif/YoungSerif-Regular.ttf");
+}
+
 @keyframes gameScreenAnimation {
     from {
         transform: scale(0);
@@ -9,7 +14,23 @@
 .gameScreen {
     height: 100%;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     animation: gameScreenAnimation 0.5s ease-in-out;
+}
+
+.cards {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    animation: gameScreenAnimation 0.5s ease-in-out;
+}
+
+.progressIndicator {
+    color: black;
+    font-family: "Young Serif";
+    font-size: 1.4em;
+    margin: 0;
 }

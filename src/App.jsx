@@ -8,6 +8,7 @@ import Header from './components/Header'
 import GameScreen from './screens/GameScreen'
 import MortalKombatThemeSong from "./assets/Mortal_Kombat.mp3"
 import ClickSound from "./assets/button.mp3"
+import { mortalKombatCharacters } from './characters';
 
 
 function App() {
@@ -18,13 +19,25 @@ function App() {
   const [gameStarted, setGameStarted] = useState(false)
   const [score, setScore] = useState(0)
   const [bestScore, setBestScore] = useState(0)
-  const [gameLevel, setGameLevel] = useState("")
+  const [gameLevel, setGameLevel] = useState([])
+  const [characters, setCharacters] = useState([])
+  const [visibleCharacters, setVisibleCharacters] = useState([])
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false)
     }, 3000)
   }, [])
+
+  const reset = () => {
+    setGameLevel([]);
+    setScore(0)
+    setBestScore(0)
+    setGameStarted(false)
+    characters.forEach(character => {
+      character.clicked = false;
+  });
+  };
 
   const restartGame = () => {
     setGameStarted(false)
@@ -38,6 +51,54 @@ function App() {
     }
   }
 
+  const getCharacters = () => {
+    const randomCharacters = new Set();
+  
+    while (randomCharacters.size < gameLevel[0]) {
+      const randNum = Math.floor(Math.random() * 20);
+      randomCharacters.add(mortalKombatCharacters[randNum]);
+    }
+  
+    const charactersArray = Array.from(randomCharacters);
+    setCharacters(charactersArray);
+    getVisibleCharacters(charactersArray);
+  };
+
+  const getVisibleCharacters = (arr) => {
+    const shuffledCharacters = new Set();
+    let clicked = 0;
+  
+    while (shuffledCharacters.size < gameLevel[1]) {
+      const randNum = Math.floor(Math.random() * arr.length);
+      const character = arr[randNum];
+  
+      if (!shuffledCharacters.has(character)
+        && (clicked < gameLevel[1] - 1 || !character.clicked)) {
+        shuffledCharacters.add(character);
+        clicked += +character.clicked;
+      }
+    }
+  
+    const charactersArray = Array.from(shuffledCharacters);
+    setVisibleCharacters(charactersArray);
+  };
+
+  const evaluateGameStatus = (character) => {
+    if (character.clicked) {
+      return 'lose';
+    }
+
+    return score === gameLevel[0] - 1 ? 'win' : 'running';
+  };
+  
+
+  const updateScore = () => {
+    setScore(score + 1)
+
+    if(score >= bestScore) setBestScore(bestScore + 1)
+  };
+
+
   const startScreenProps = {
     gameStarted,
     setGameStarted,
@@ -49,12 +110,22 @@ function App() {
     score,
     bestScore,
     restartGame,
-    playClickSound
+    playClickSound,
+    reset
   }
 
   const gameScreenProps = {
-    gameLevel,
-    isSoundPlaying
+    isSoundPlaying,
+    characters,
+    setCharacters,
+    visibleCharacters,
+    setVisibleCharacters,
+    getCharacters,
+    getVisibleCharacters,
+    evaluateGameStatus,
+    score,
+    setScore,
+    updateScore,
   }
 
   const footerProps = {
